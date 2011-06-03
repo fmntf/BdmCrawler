@@ -24,7 +24,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -67,34 +66,27 @@ public class HtmlAnalyzer
 		ArrayList list = new ArrayList<HtmlLink>();
 		
 		XPath xpath = XPathFactory.newInstance().newXPath();
-		String pattern = "//body/a";
 		try {
-			NodeList nodes = (NodeList) xpath.evaluate(pattern, this.page, XPathConstants.NODESET);
-			for (int i = 0; i < nodes.getLength(); i++) {
-					DOMElementImpl node = (DOMElementImpl) nodes.item(i);
-					list.add(new HtmlLink(node.getAttribute("href")));
+			NodeList links = (NodeList) xpath.evaluate("//body/a", this.page, XPathConstants.NODESET);
+			for (int i = 0; i < links.getLength(); i++) {
+					DOMElementImpl link = (DOMElementImpl) links.item(i);
+					list.add(new HtmlLink(link.getAttribute("href")));
 			}
 		}
-		catch (XPathExpressionException e) {
-			System.err.println("Invalid XPath pattern: " + pattern);
-		}
+		catch (XPathExpressionException e) {}
 		
 		return list;
 	}
 	
+	@Override
 	public String toString()
 	{
+		StringWriter stringWriter = new StringWriter();
 		try{
-			TransformerFactory tf = TransformerFactory.newInstance();
-			Transformer t = tf.newTransformer();
-			DOMSource src = new DOMSource(this.page);
-			StringWriter stringWriter = new StringWriter();
-			Result res = new StreamResult(stringWriter);
-			t.transform(src, res);
+			Transformer t = TransformerFactory.newInstance().newTransformer();
+			t.transform(new DOMSource(this.page), new StreamResult(stringWriter));
+		} catch (Exception e) {}
 			
-			return stringWriter.getBuffer().toString();
-		} catch (Exception e) {
-			return "Exception: " + e.getMessage();
-		}
+		return stringWriter.getBuffer().toString();
 	}
 }
