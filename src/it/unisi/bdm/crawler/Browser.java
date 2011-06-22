@@ -19,6 +19,8 @@ package it.unisi.bdm.crawler;
 import java.net.URL;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class Browser
@@ -27,6 +29,9 @@ public class Browser
 	
 	public Browser(String url) throws java.io.IOException, InvalidUrlException
 	{
+		// disable logging
+		System.getProperties().put("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+		
 		WebClient webClient = new WebClient();
 		Page page;
 		URL u;
@@ -54,5 +59,18 @@ public class Browser
 	public String getPageTitle()
 	{
 		return this.page.getTitleText();
+	}
+	
+	public void test()
+	{
+		for (DomNode anchor:this.page.querySelectorAll("a:visible")) {
+			anchor = (HtmlAnchor)anchor;
+			System.out.println(anchor.getTextContent());
+		}
+		System.out.println("......................");
+		for (DomNode anchor:this.page.querySelectorAll("a")) {
+			anchor = (HtmlAnchor)anchor;
+			System.out.println(anchor.getTextContent());
+		}
 	}
 }
