@@ -13,12 +13,33 @@
  * You should have received a copy of the GNU General Public License
  * along with BdmCrawler.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package it.unisi.bdm.crawler;
 
-public class InvalidUrlException extends Exception
+import java.net.URL;
+
+public class UrlInspector
 {
-	public InvalidUrlException(String message)
+	public Boolean isLegal(String url) throws java.io.IOException
 	{
-		super(message);
+		URL u;
+		
+		try {
+			u = new URL(url);
+		}
+		catch (java.net.MalformedURLException e) {
+			return false;
+		}
+		
+		if (!u.getProtocol().equals("http")) {
+			return false;
+		}
+		
+		String contentType = u.openConnection().getContentType().split(";")[0];
+		if (!contentType.equals("text/html")) {
+			return false;
+		}
+
+		return true;
 	}
 }
