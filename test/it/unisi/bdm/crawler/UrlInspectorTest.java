@@ -22,35 +22,28 @@ import static org.junit.Assert.*;
 public class UrlInspectorTest
 {
 	@Test
-	public void testGetsHtmlDocument() throws java.io.IOException
+	public void wontReportFalsePositives() throws java.io.IOException
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertTrue(inspector.isLegal("http://blog.webmatters.it"));
 	}
 	
 	@Test
-	public void testThrowsExceptionOnUrlThatPointsToAnImage() throws java.io.IOException
+	public void detectsAnUrlThatPointsToAnImage() throws java.io.IOException
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertFalse(inspector.isLegal("http://blog.webmatters.it/wp-content/themes/twentyten/images/tramonto.jpg"));
 	}
 	
 	@Test
-	public void testThrowsExceptionOnUrlWithFtpSchema() throws java.io.IOException
+	public void detectsAnUrlWithFtpSchema() throws java.io.IOException
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertFalse(inspector.isLegal("ftp://blog.webmatters.it"));
 	}
 	
 	@Test
-	public void testThrowsExceptionOnUrlWithMailtoSchema() throws java.io.IOException
-	{
-		UrlInspector inspector = new UrlInspector();
-		assertFalse(inspector.isLegal("mailto:francesco.monte@gmail.com"));
-	}
-	
-	@Test
-	public void testThrowsExceptionOnUrlWithJavascriptSchema() throws java.io.IOException
+	public void detectsAnUrlWithJavascriptSchema() throws java.io.IOException
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertFalse(inspector.isLegal("javascript:history.back()"));
