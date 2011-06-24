@@ -31,11 +31,14 @@ page.open(encodeURI(phantom.args[0]), function (status) {
 			}
 			
             var list = document.querySelectorAll('a');
-			var response = {};
+			var response = new Array();
             for (var i = 0; i < list.length; ++i) {
 				var visible = isVisible(list[i]);
 				var url = list[i].href;
-				response[url] = !!visible;
+				response.push({
+					url: url,
+					visible: !!visible
+				});
             }
 			
 			console.log(JSON.stringify(response));
