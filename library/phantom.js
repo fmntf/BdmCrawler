@@ -1,12 +1,16 @@
 var page = new WebPage();
 
-page.onConsoleMessage = function(msg) {
-    console.log(msg);
-};
+// penalize links over 5 scrolls of 1024 pixels.
+page.viewportSize = { width: 1024, height: 1024*5 }
+
+// a little bit of ego
+var baseAgent = page.settings.userAgent.split('PhantomJS')[0];
+page.settings.userAgent = baseAgent + "BdmCrawler/1.0";
+
 
 page.open(encodeURI(phantom.args[0]), function (status) {
-    if (status === "success") {
-        page.evaluate(function() {
+	if (status === "success") {
+		var links = page.evaluate(function() {
 			
 			function isVisible(element) {
 				if (element.offsetWidth === 0 || element.offsetHeight === 0) return false;
@@ -41,9 +45,15 @@ page.open(encodeURI(phantom.args[0]), function (status) {
 				});
             }
 			
-			console.log(JSON.stringify(response));
-			
+			return response;
         });
+		
+		var response = {
+			html: page.content,
+			links: links
+		};
+		
+		console.log(JSON.stringify(response));
     }
     phantom.exit();
 });

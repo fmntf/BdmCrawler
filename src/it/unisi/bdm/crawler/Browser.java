@@ -36,7 +36,7 @@ public class Browser
 		this.timeout = timeout;
 	}
 	
-	public Link[] getLinks(String url)
+	public Page getPage(String url)
 		throws BrowserTimeoutException
 	{
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
@@ -56,7 +56,7 @@ public class Browser
 		}
 		
 		String json = stdout.toString();
-		return new Gson().fromJson(json, Link[].class);
+		return new Gson().fromJson(json, Page.class);
 	}
 	
 	public static OutputStream executeCommandLine(final String commandLine, final long timeout)

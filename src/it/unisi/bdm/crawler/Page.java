@@ -16,26 +16,18 @@
 
 package it.unisi.bdm.crawler;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-
-public class BrowserTest
+public class Page
 {
-	@Test
-	public void getsHtmlPageWithLinks() throws BrowserTimeoutException
+	private String html;
+	private Link[] links;
+	
+	public Link[] getLinks()
 	{
-		Browser browser = new Browser(5000); // msec
-		Page page = browser.getPage("http://blog.webmatters.it");
-		
-		assertTrue(page.toString().length() > 0);
-		assertTrue(page.getLinks().length > 0);
-		assertTrue(page.getLinks()[0].toString().startsWith("http://"));
+		return this.links;
 	}
 	
-	@Test(expected=BrowserTimeoutException.class)
-	public void throwsExceptionOnTimeout() throws BrowserTimeoutException
+	public String toString()
 	{
-		Browser browser = new Browser(10); // msec
-		browser.getPage("http://blog.webmatters.it");
+		return this.html;
 	}
 }
