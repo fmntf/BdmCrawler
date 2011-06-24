@@ -58,45 +58,4 @@ public class Browser
 		String json = stdout.toString();
 		return new Gson().fromJson(json, Page.class);
 	}
-	
-	public static OutputStream executeCommandLine(final String commandLine, final long timeout)
-		throws IOException, InterruptedException, BrowserTimeoutException
-	{
-		Runtime runtime = Runtime.getRuntime();
-		Process process = runtime.exec(commandLine);
-		/* Set up process I/O. */
-		
-		Worker worker = new Worker(process);
-		worker.start();
-		try {
-			worker.join(timeout);
-			if (worker.exit != null)
-				return process.getOutputStream();
-			else
-				throw new BrowserTimeoutException();
-		} catch (InterruptedException ex) {
-			worker.interrupt();
-			Thread.currentThread().interrupt();
-			throw ex;
-		} finally {
-			process.destroy();
-		}
-	}
-
-	private static class Worker extends Thread {
-		private final Process process;
-		private Integer exit;
-		private Worker(Process process) {
-			this.process = process;
-		}
-		
-		@Override
-		public void run() {
-			try { 
-				exit = process.waitFor();
-			} catch (InterruptedException ignore) {
-				return;
-			}
-		}  
-	}
 }
