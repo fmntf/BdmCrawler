@@ -24,7 +24,7 @@ public class BrowserTest
 	@Test
 	public void getsHtmlPageWithLinks() throws BrowserTimeoutException
 	{
-		Browser browser = new Browser(5000); // msec
+		Browser browser = new Browser();
 		Page page = browser.getPage("http://blog.webmatters.it");
 		
 		assertTrue(page.toString().length() > 0);

@@ -16,20 +16,21 @@
 
 package it.unisi.bdm.crawler;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
-
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import com.google.gson.Gson;
 
-
 public class Browser
 {
 	private long timeout;
+	
+	public Browser()
+	{
+		this.timeout = 9999;
+	}
 	
 	public Browser(long timeout)
 	{
