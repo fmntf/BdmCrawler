@@ -87,7 +87,7 @@ public class Crawler
 						if (urlInspector.isLegal(link.toString())) {
 							link.setContextMess(downloadedPage.getContextMess(validator));
 							this.queue.add(link);
-							this.say("   [Adding link @" + link.getScore().toString() + "] " + link);
+							this.say("   [Adding "+link.how()+" @" +link.getScore().toString()+ "] " + link);
 						} else {
 							this.say("   [NOT adding link] " + link);
 						}
@@ -100,6 +100,8 @@ public class Crawler
 				this.banned.add(e.getLink());
 			}
 		}
+		
+		this.say("\n\nNothing else to crawl!");
 	}
 	
 	public HashMap<Link, String> getDownloadedPages()

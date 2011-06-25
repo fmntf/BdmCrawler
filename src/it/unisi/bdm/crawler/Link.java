@@ -66,6 +66,24 @@ public class Link
 		return score;
 	}
 	
+	public String how()
+	{
+		String what = "link";
+		if (this.bold) {
+			if (this.visible) {
+				what = "bold+visible link";
+			} else {
+				what = "bold link";
+			}
+		} else {
+			if (this.visible) {
+				what = "visible link";
+			}
+		}
+		
+		return what;
+	}
+	
 	@Override
 	public String toString()
 	{
