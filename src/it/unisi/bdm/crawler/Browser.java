@@ -23,7 +23,7 @@ import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import com.google.gson.Gson;
 
-public class Browser
+public class Browser implements BrowserInterface
 {
 	private long timeout;
 	
@@ -37,8 +37,8 @@ public class Browser
 		this.timeout = timeout;
 	}
 	
-	public Page getPage(String url)
-		throws BrowserTimeoutException
+	@Override
+	public Page getPage(String url) throws BrowserTimeoutException
 	{
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		PumpStreamHandler psh = new PumpStreamHandler(stdout);
