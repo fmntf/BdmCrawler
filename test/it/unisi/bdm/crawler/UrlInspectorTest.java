@@ -22,28 +22,28 @@ import static org.junit.Assert.*;
 public class UrlInspectorTest
 {
 	@Test
-	public void wontReportFalsePositives() throws java.io.IOException
+	public void wontReportFalsePositives()
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertTrue(inspector.isLegal("http://blog.webmatters.it"));
 	}
 	
 	@Test
-	public void detectsAnUrlThatPointsToAnImage() throws java.io.IOException
+	public void detectsAnUrlThatPointsToAnImage()
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertFalse(inspector.isLegal("http://blog.webmatters.it/wp-content/themes/twentyten/images/tramonto.jpg"));
 	}
 	
 	@Test
-	public void detectsAnUrlWithFtpSchema() throws java.io.IOException
+	public void detectsAnUrlWithFtpSchema()
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertFalse(inspector.isLegal("ftp://blog.webmatters.it"));
 	}
 	
 	@Test
-	public void detectsAnUrlWithJavascriptSchema() throws java.io.IOException
+	public void detectsAnUrlWithJavascriptSchema()
 	{
 		UrlInspector inspector = new UrlInspector();
 		assertFalse(inspector.isLegal("javascript:history.back()"));

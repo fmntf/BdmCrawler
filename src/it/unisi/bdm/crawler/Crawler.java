@@ -61,9 +61,10 @@ public class Crawler
 	{
 		Link linkToProcess;
 		Page downloadedPage;
-		int downloaded = 0;
+		int downloadedCount = 0;
+		UrlInspector urlInspector = new UrlInspector();
 		
-		while (!this.queue.isEmpty() && downloaded<this.maxDownloadedPages) {
+		while (!this.queue.isEmpty() && downloadedCount<this.maxDownloadedPages) {
 			try {
 				linkToProcess = this.queue.poll();
 				downloadedPage = this.processLink(linkToProcess, 3);
@@ -72,15 +73,26 @@ public class Crawler
 				// store HTML
 				this.downloaded.put(linkToProcess, downloadedPage.toString());
 				
-				// add links to queue if not downloaded yet AND not banned
+				// add links to queue if
+				//  - not downloaded yet
+				//  - not in download queue
+				//  - not banned
 				for (Link link:downloadedPage.getLinks()) {
-					if (!this.banned.contains(link) && !this.downloaded.containsKey(link)) {
-						this.queue.add(link);
-						this.say("   [Adding link] " + link);
+					if (
+						!this.banned.contains(link) &&
+						!this.downloaded.containsKey(link) &&
+						!this.queue.contains(link)
+					) {
+						if (urlInspector.isLegal(link.toString())) {
+							this.queue.add(link);
+							this.say("   [Adding link] " + link);
+						} else {
+							this.say("   [NOT adding link] " + link);
+						}
 					}
 				}
 				
-				downloaded++;
+				downloadedCount++;
 			}
 			catch (UnreachableUrlException e) {
 				this.banned.add(e.getLink());
@@ -112,6 +124,7 @@ public class Crawler
 		}
 		catch (Exception e) {
 			if (tryAgain>0) {
+				this.say("[WARNING] Browser hangs, process killed. Times before banning page: " + tryAgain-1);
 				return this.processLink(link, tryAgain-1);
 			} else {
 				throw new UnreachableUrlException(link);

@@ -85,6 +85,19 @@ public class CrawlerTest
 		assertTrue(crawler.getBannedPages().isEmpty());
 	}
 	
+	@Test
+	public void ignoresNonHttpLinks()
+	{
+		BrowserMock browser = new BrowserMock();
+		this.injectMailtoGraph(browser);
+		
+		Crawler crawler = new Crawler("http://www.iveco.com");
+		crawler.setBrowser(browser);
+		
+		crawler.unleash();
+		
+		assertTrue(crawler.getDownloadedPages().size() == 1);
+	}
 	
 	
 	/**
@@ -169,5 +182,14 @@ public class CrawlerTest
 		
 		Page d = new Page("<!doctype html>", new Link[0]);
 		browser.setPage("http://www.dailyminivan.iveco.com", d);
+	}
+	
+	private void injectMailtoGraph(BrowserMock browser)
+	{
+		Link[] toMail = new Link[1];
+		toMail[0] = new Link("mailto:info@iveco.com");
+		
+		Page index = new Page("<!doctype html><html>...</html>", toMail);
+		browser.setPage("http://www.iveco.com", index);
 	}
 }

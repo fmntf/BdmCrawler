@@ -16,11 +16,12 @@
 
 package it.unisi.bdm.crawler;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class UrlInspector
 {
-	public Boolean isLegal(String url) throws java.io.IOException
+	public Boolean isLegal(String url)
 	{
 		URL u;
 		
@@ -35,8 +36,13 @@ public class UrlInspector
 			return false;
 		}
 		
-		String contentType = u.openConnection().getContentType().split(";")[0];
-		if (!contentType.equals("text/html")) {
+		try {
+			String contentType = u.openConnection().getContentType().split(";")[0];
+			if (!contentType.equals("text/html")) {
+				return false;
+			}
+		}
+		catch (IOException e) {
 			return false;
 		}
 
