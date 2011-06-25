@@ -124,7 +124,7 @@ public class Crawler
 		}
 		catch (Exception e) {
 			if (tryAgain>0) {
-				this.say("[WARNING] Browser hangs, process killed. Times before banning page: " + tryAgain-1);
+				this.say("[WARNING] Browser hangs, process killed. Times before banning page: " + (tryAgain-1));
 				return this.processLink(link, tryAgain-1);
 			} else {
 				throw new UnreachableUrlException(link);
