@@ -20,11 +20,50 @@ public class Link
 {
 	private String url;
 	private Boolean visible;
+	private Boolean bold;
+	private float contextMess = 0;
 	
 	public Link(String url)
 	{
 		this.url = url;
+		this.visible = true;
+		this.bold = false;
+	}
+	
+	public Link(String url, Boolean visible, Boolean bold)
+	{
+		this.url = url;
 		this.visible = visible;
+		this.bold = bold;
+	}
+	
+	public void setContextMess(float contextMess)
+	{
+		this.contextMess = contextMess;
+	}
+	
+	public Float getScore()
+	{
+		float score = 1 - this.contextMess;
+		
+		if (!this.visible) {
+			score = score * 0.1f;
+		}
+		
+		if (!this.bold) {
+			score = score * 0.8f;
+		}
+		
+		String[] parts = this.url.split("\\?");
+		if (parts.length == 2) {
+			parts = parts[1].split("&");
+			int qsLegth = parts.length;
+			
+			score = score * (float) Math.pow(0.95f, qsLegth);
+		}
+		
+		
+		return score;
 	}
 	
 	@Override

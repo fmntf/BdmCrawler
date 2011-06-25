@@ -16,13 +16,18 @@
 
 package it.unisi.bdm.crawler;
 
-import java.util.Comparator;
-
-public class LinkComparator implements Comparator<Link>
+public class HtmlValidatorMock implements HtmlValidatorInterface
 {
-	@Override
-	public int compare(Link x, Link y)
+	int returnValue;
+	
+	public HtmlValidatorMock(int returnValue)
 	{
-		return x.getScore().compareTo(y.getScore());
+		this.returnValue = returnValue;
+	}
+	
+	@Override
+	public int validate(String html)
+	{
+		return this.returnValue;
 	}
 }

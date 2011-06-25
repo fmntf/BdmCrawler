@@ -29,7 +29,7 @@ public class HtmlValidatorTest
 	{
 		HtmlValidator validator = new HtmlValidator();
 		
-		int mess = validator.tidy(this.readFile("test/fixtures/html/w3.org.html"));
+		int mess = validator.validate(this.readFile("test/fixtures/html/w3.org.html"));
 		assertEquals(0, mess);
 	}
 	
@@ -38,7 +38,7 @@ public class HtmlValidatorTest
 	{
 		HtmlValidator validator = new HtmlValidator();
 		
-		int mess = validator.tidy(this.readFile("test/fixtures/html/iveco.com.html"));
+		int mess = validator.validate(this.readFile("test/fixtures/html/iveco.com.html"));
 		assertEquals(12, mess);
 	}
 	

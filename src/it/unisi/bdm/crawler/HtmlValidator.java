@@ -23,9 +23,10 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
-public class HtmlValidator
+public class HtmlValidator implements HtmlValidatorInterface
 {
-	public int tidy(String html)
+	@Override
+	public int validate(String html)
 	{
 		Tidy tidy = new Tidy();
 

@@ -32,6 +32,17 @@ public class Page
 		return this.links;
 	}
 	
+	public float getContextMess(HtmlValidatorInterface validator)
+	{
+		float errors = (float)validator.validate(this.html);
+		
+		if (errors/100 > 0.5f) {
+			return 0.5f;
+		}
+		
+		return errors/100;
+	}
+	
 	@Override
 	public String toString()
 	{
