@@ -26,31 +26,38 @@ public class Crawler
 	PriorityQueue<Link> queue;
 	HashMap<Link, String> downloaded;
 	ArrayList<Link> banned;
-	Browser browser;
+	BrowserInterface browser;
+	int maxDownloadedPages = Integer.MAX_VALUE;
 	
 	public Crawler(String startUrl)
 	{
 		Comparator<Link> comparator = new LinkComparator();
         this.queue = new PriorityQueue<Link>(30, comparator);
 		this.queue.add(
-			new Link(startUrl, true)
+			new Link(startUrl)
 		);
 		
 		this.banned = new ArrayList<Link>();
 		this.downloaded = new HashMap<Link, String>();
 	}
 	
-	public void setBrowser(Browser browser)
+	public void setBrowser(BrowserInterface browser)
 	{
 		this.browser = browser;
+	}
+	
+	public void setMaxDownloadedPages(int n)
+	{
+		this.maxDownloadedPages = n;
 	}
 	
 	public void unleash()
 	{
 		Link linkToProcess;
 		Page downloadedPage;
+		int downloaded = 0;
 		
-		while (!this.queue.isEmpty()) {
+		while (!this.queue.isEmpty() && downloaded<this.maxDownloadedPages) {
 			try {
 				linkToProcess = this.queue.poll();
 				downloadedPage = this.processLink(linkToProcess, 3);
@@ -64,11 +71,23 @@ public class Crawler
 						this.queue.add(link);
 					}
 				}
+				
+				downloaded++;
 			}
 			catch (UnreachableUrlException e) {
 				this.banned.add(e.getLink());
 			}
 		}
+	}
+	
+	public HashMap<Link, String> getDownloadedPages()
+	{
+		return this.downloaded;
+	}
+	
+	public ArrayList<Link> getBannedPages()
+	{
+		return this.banned;
 	}
 	
 	private Page processLink(Link link, int tryAgain) throws UnreachableUrlException

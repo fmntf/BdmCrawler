@@ -16,7 +16,7 @@
 
 package it.unisi.bdm.crawler;
 
-interface BrowserInterface
+public interface BrowserInterface
 {
 	public Page getPage(String url) throws BrowserTimeoutException;
 }

@@ -21,14 +21,27 @@ public class Link
 	private String url;
 	private Boolean visible;
 	
-	public Link(String url, Boolean visible)
+	public Link(String url)
 	{
 		this.url = url;
 		this.visible = visible;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return this.url;
+	}
+	
+	@Override
+	public boolean equals(Object other)
+	{
+		return other.toString().equals(this.toString());
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return this.url.hashCode();
 	}
 }

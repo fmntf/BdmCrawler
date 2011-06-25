@@ -16,7 +16,29 @@
 
 package it.unisi.bdm.crawler;
 
-public class BrowserMock
+import java.util.HashMap;
+
+public class BrowserMock implements BrowserInterface
 {
+	HashMap<String, Page> pages;
 	
+	public BrowserMock()
+	{
+		this.pages = new HashMap<String, Page>();
+	}
+	
+	public void setPage(String url, Page page)
+	{
+		this.pages.put(url, page);
+	}
+	
+	@Override
+	public Page getPage(String url) throws BrowserTimeoutException
+	{
+		if (this.pages.containsKey(url)) {
+			return this.pages.get(url);
+		} else {
+			throw new BrowserTimeoutException();
+		}
+	}
 }

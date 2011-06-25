@@ -21,11 +21,18 @@ public class Page
 	private String html;
 	private Link[] links;
 	
+	public Page(String html, Link[] links)
+	{
+		this.html = html;
+		this.links = links;
+	}
+	
 	public Link[] getLinks()
 	{
 		return this.links;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return this.html;
