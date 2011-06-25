@@ -1,3 +1,19 @@
+/**
+ * This file is part of BdmCrawler.
+ * BdmCrawler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * BdmCrawler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with BdmCrawler.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 var page = new WebPage();
 
 // penalize links over 5 scrolls of 1024 pixels.
@@ -27,11 +43,9 @@ page.open(encodeURI(phantom.args[0]), function (status) {
 					var r = rects[i],
 					in_viewport = r.top > 0 ? r.top <= height : (r.bottom > 0 && r.bottom <= height);
 					if (in_viewport && on_top(r)) return true;
-					else {
-						if (! on_top(r)) debugger;
-						on_top(r);
-					}
 				}
+				
+				return true;
 			}
 			
 			function isBold(element) {
@@ -50,18 +64,16 @@ page.open(encodeURI(phantom.args[0]), function (status) {
 
 			
             var list = document.querySelectorAll('a');
-			var response = new Array();
+			var links = new Array();
             for (var i = 0; i < list.length; ++i) {
-				var visible = isVisible(list[i]);
-				var url = list[i].href;
-				response.push({
-					url: url,
-					visible: !!visible,
+				links.push({
+					url: list[i].href,
+					visible: isVisible(list[i]),
 					bold: isBold(list[i])
 				});
             }
 			
-			return response;
+			return links;
         });
 		
 		var response = {

@@ -43,7 +43,7 @@ public class Browser implements BrowserInterface
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		PumpStreamHandler psh = new PumpStreamHandler(stdout);
 			
-		String line = "library/phantomjs library/phantom.js " + url;
+		String line = "library/phantomjs library/crawler.js " + url;
 		CommandLine cmdLine = CommandLine.parse(line);
 		DefaultExecutor executor = new DefaultExecutor();
 		ExecuteWatchdog watchdog = new ExecuteWatchdog(this.timeout);
