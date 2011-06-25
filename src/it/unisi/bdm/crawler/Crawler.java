@@ -28,6 +28,7 @@ public class Crawler
 	ArrayList<Link> banned;
 	BrowserInterface browser;
 	int maxDownloadedPages = Integer.MAX_VALUE;
+	boolean verbose = false;
 	
 	public Crawler(String startUrl)
 	{
@@ -51,6 +52,11 @@ public class Crawler
 		this.maxDownloadedPages = n;
 	}
 	
+	public void setVerbose(boolean verbose)
+	{
+		this.verbose = verbose;
+	}
+	
 	public void unleash()
 	{
 		Link linkToProcess;
@@ -61,6 +67,7 @@ public class Crawler
 			try {
 				linkToProcess = this.queue.poll();
 				downloadedPage = this.processLink(linkToProcess, 3);
+				this.say("[Downloaded page] " + linkToProcess);
 				
 				// store HTML
 				this.downloaded.put(linkToProcess, downloadedPage.toString());
@@ -69,6 +76,7 @@ public class Crawler
 				for (Link link:downloadedPage.getLinks()) {
 					if (!this.banned.contains(link) && !this.downloaded.containsKey(link)) {
 						this.queue.add(link);
+						this.say("   [Adding link] " + link);
 					}
 				}
 				
@@ -88,6 +96,13 @@ public class Crawler
 	public ArrayList<Link> getBannedPages()
 	{
 		return this.banned;
+	}
+	
+	private void say(String message)
+	{
+		if (verbose) {
+			System.out.println(message);
+		}
 	}
 	
 	private Page processLink(Link link, int tryAgain) throws UnreachableUrlException

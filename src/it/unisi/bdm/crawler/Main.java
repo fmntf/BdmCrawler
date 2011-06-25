@@ -20,5 +20,17 @@ public class Main
 {
 	public static void main(String[] args)
 	{
+		if (args.length != 1) {
+			System.out.println("Usage:");
+			System.out.println("   java -jar crawler.jar <StartUrl>");
+			System.exit(1);
+		}
+		
+		Crawler crawler = new Crawler(args[0]);
+		Browser browser = new Browser();
+		
+		crawler.setBrowser(browser);
+		crawler.setVerbose(true);
+		crawler.unleash();
 	}
 }
