@@ -16,19 +16,17 @@
 
 package it.unisi.bdm.crawler;
 
-public class Link
+public class UnreachableUrlException extends Exception
 {
-	private String url;
-	private Boolean visible;
+	private Link link;
 	
-	public Link(String url, Boolean visible)
+	public UnreachableUrlException(Link link)
 	{
-		this.url = url;
-		this.visible = visible;
+		this.link = link;
 	}
 	
-	public String toString()
+	public Link getLink()
 	{
-		return this.url;
+		return this.link;
 	}
 }

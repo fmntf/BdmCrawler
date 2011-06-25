@@ -16,14 +16,13 @@
 
 package it.unisi.bdm.crawler;
 
-import org.w3c.tidy.TidyMessageListener;
-import org.w3c.tidy.TidyMessage;
+import java.util.Comparator;
 
-public class HtmlValidatorMessageListener implements TidyMessageListener
+public class LinkComparator implements Comparator<Link>
 {
 	@Override
-	public void messageReceived(TidyMessage message)
+	public int compare(Link x, Link y)
 	{
-		System.out.println("ewe");
+		return 0;
 	}
 }

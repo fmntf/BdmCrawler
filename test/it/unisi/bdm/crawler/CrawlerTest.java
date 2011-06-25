@@ -16,19 +16,10 @@
 
 package it.unisi.bdm.crawler;
 
-public class Link
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class CrawlerTest
 {
-	private String url;
-	private Boolean visible;
 	
-	public Link(String url, Boolean visible)
-	{
-		this.url = url;
-		this.visible = visible;
-	}
-	
-	public String toString()
-	{
-		return this.url;
-	}
 }

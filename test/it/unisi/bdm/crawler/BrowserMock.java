@@ -16,19 +16,7 @@
 
 package it.unisi.bdm.crawler;
 
-public class Link
+public class BrowserMock
 {
-	private String url;
-	private Boolean visible;
 	
-	public Link(String url, Boolean visible)
-	{
-		this.url = url;
-		this.visible = visible;
-	}
-	
-	public String toString()
-	{
-		return this.url;
-	}
 }
