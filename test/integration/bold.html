@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it"> 
+<head> 
+	<title>Bold TestCase</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+	<style type="text/css">
+		#cssclass {font-weight:bold;}
+	</style>
+</head>
+<body> 
+
+	<a id="std" href="#">std</a>
+	<a id="btag" href="#"><b>b</b></a>
+	<a id="strongtag" href="#"><strong>strong</strong></a>
+	<b><a id="parentbtag" href="#">parentb</a></b>
+	<strong><a id="parentstrongtag" href="#">parentstrong</a></strong>
+	<a id="stylebold" href="#" style="font-weight:bold;">css</a>
+	<a id="cssclass" href="#">cssclass</a>
+
+	<script>
+		function bold(element) {
+			if (element.style.fontWeight == 'bold') return true;
+
+			if (element.childNodes.length == 1) {
+				var child = element.childNodes[0];
+				if (child.nodeName == 'B' || child.nodeName == 'STRONG') return true;
+			}
+
+			var parent = element.parentNode;
+			if (parent.nodeName == 'B' || parent.nodeName == 'STRONG') return true;
+
+			return false;
+		}
+
+		function assert(id, expected) {
+			var el = document.getElementById(id);
+			console.log(el, bold(el));
+			console.assert(bold(el) == expected, el);
+		}
+
+		assert('std', false);
+		assert('btag', true);
+		assert('strongtag', true);
+		assert('parentbtag', true);
+		assert('parentstrongtag', true);
+		assert('stylebold', true);
+		assert('cssclass', true);
+	</script>
+
+</body>
+</html> 
