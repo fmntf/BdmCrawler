@@ -16,13 +16,18 @@
 
 package it.unisi.bdm.crawler;
 
-import java.util.Comparator;
+import org.junit.runner.RunWith; 
+import org.junit.runners.Suite; 
 
-public class LinkComparator implements Comparator<Link>
-{
-	@Override
-	public int compare(Link x, Link y)
-	{
-		return - x.getScore().compareTo(y.getScore());
-	}
-}
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+	BrowserTest.class,
+	CrawlerTest.class,
+	HtmlValidatorTest.class,
+	LinkComparatorTest.class,
+	LinkTest.class,
+	PageTest.class,
+	UrlInspectorTest.class
+})
+public class AllTests
+{}

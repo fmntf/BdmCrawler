@@ -63,6 +63,7 @@ public class Crawler
 		Page downloadedPage;
 		int downloadedCount = 0;
 		UrlInspector urlInspector = new UrlInspector();
+		HtmlValidator validator = new HtmlValidator();
 		
 		while (!this.queue.isEmpty() && downloadedCount<this.maxDownloadedPages) {
 			try {
@@ -84,8 +85,9 @@ public class Crawler
 						!this.queue.contains(link)
 					) {
 						if (urlInspector.isLegal(link.toString())) {
+							link.setContextMess(downloadedPage.getContextMess(validator));
 							this.queue.add(link);
-							this.say("   [Adding link] " + link);
+							this.say("   [Adding link @" + link.getScore().toString() + "] " + link);
 						} else {
 							this.say("   [NOT adding link] " + link);
 						}

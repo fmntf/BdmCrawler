@@ -18,6 +18,7 @@ package it.unisi.bdm.crawler;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.HttpURLConnection;
 
 public class UrlInspector
 {
@@ -37,7 +38,12 @@ public class UrlInspector
 		}
 		
 		try {
-			String contentType = u.openConnection().getContentType().split(";")[0];
+			HttpURLConnection huc = (HttpURLConnection) u.openConnection();
+			huc.setRequestMethod("HEAD");
+			huc.setConnectTimeout(5*1000);
+			huc.connect();
+			
+			String contentType = huc.getContentType().split(";")[0];
 			if (!contentType.equals("text/html")) {
 				return false;
 			}

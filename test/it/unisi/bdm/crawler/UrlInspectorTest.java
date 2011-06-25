@@ -48,4 +48,11 @@ public class UrlInspectorTest
 		UrlInspector inspector = new UrlInspector();
 		assertFalse(inspector.isLegal("javascript:history.back()"));
 	}
+	
+	@Test
+	public void wontHangIfUrlDoesNotExists()
+	{
+		UrlInspector inspector = new UrlInspector();
+		assertFalse(inspector.isLegal("http://www.dailyminivan.iveco.com"));
+	}
 }
