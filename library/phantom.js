@@ -34,6 +34,21 @@ page.open(encodeURI(phantom.args[0]), function (status) {
 				}
 			}
 			
+			function isBold(element) {
+				if (element.style.fontWeight == 'bold') return true;
+
+				if (element.childNodes.length == 1) {
+					var child = element.childNodes[0];
+					if (child.nodeName == 'B' || child.nodeName == 'STRONG') return true;
+				}
+
+				var parent = element.parentNode;
+				if (parent.nodeName == 'B' || parent.nodeName == 'STRONG') return true;
+
+				return false;
+			}
+
+			
             var list = document.querySelectorAll('a');
 			var response = new Array();
             for (var i = 0; i < list.length; ++i) {
@@ -41,7 +56,8 @@ page.open(encodeURI(phantom.args[0]), function (status) {
 				var url = list[i].href;
 				response.push({
 					url: url,
-					visible: !!visible
+					visible: !!visible,
+					bold: isBold(list[i])
 				});
             }
 			
