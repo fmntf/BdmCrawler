@@ -28,7 +28,7 @@ public class Crawler
 	private ArrayList<Link> banned;
 	private BrowserInterface browser;
 	private int maxDownloadedPages = Integer.MAX_VALUE;
-	private boolean verbose = false;
+	private boolean verbose = true;
 	private UrlInspectorInterface urlInspector;
 	private HtmlValidator validator;
 	
@@ -111,7 +111,7 @@ public class Crawler
 			}
 		}
 		
-		this.say("\n\nNothing else to crawl!");
+		this.say("\n\nNo, I'm not crashing. There is just nothing else to crawl!");
 	}
 	
 	public HashMap<Link, String> getDownloadedPages()

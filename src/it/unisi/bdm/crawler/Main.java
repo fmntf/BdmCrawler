@@ -20,19 +20,44 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		if (args.length != 1) {
-			System.out.println("Usage:");
-			System.out.println("   java -jar crawler.jar <StartUrl>");
-			System.exit(1);
+		if (args.length == 0) {
+			Main.usage();
 		}
 		
 		Crawler crawler = new Crawler();
-		Browser browser = new Browser();
+		crawler.setBrowser(new Browser());
 		
-		crawler.setBrowser(browser);
-		crawler.setVerbose(true);
-//		crawler.setUrlInspector(new UrlInspector());
-		
-		crawler.unleash(args[0]);
+		for (int i=1; i<args.length; i++) {
+			if (args[i].equals("--quiet")) {
+				crawler.setVerbose(false);
+			} else {
+				if (args[i].equals("--accurate")) {
+					crawler.setUrlInspector(new UrlInspector());
+				} else {
+					System.out.println("Invalid option: " + args[i]);
+					Main.usage();
+				}
+			}
+		}
+
+		try {
+			crawler.unleash(args[0]);
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("The provided URL " + args[0] + " appears to be invalid.");
+			Main.usage();
+		}
+	}
+	
+	private static void usage()
+	{
+		System.out.println("Usage:");
+		System.out.println("   java -jar crawler.jar <StartUrl> [--quiet] [--accurate]");
+		System.out.println("\n");
+		System.out.println("Options:");
+		System.out.println("  --quiet     no output at all");
+		System.out.println("  --accurate  sends an HEAD request to discover mime-type");
+		System.out.println("              instead of detecting it by URL extension");
+		System.exit(1);
 	}
 }
