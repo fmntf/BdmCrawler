@@ -23,6 +23,6 @@ public class LinkComparator implements Comparator<Link>
 	@Override
 	public int compare(Link x, Link y)
 	{
-		return - x.getScore().compareTo(y.getScore());
+		return y.getScore().compareTo(x.getScore());
 	}
 }

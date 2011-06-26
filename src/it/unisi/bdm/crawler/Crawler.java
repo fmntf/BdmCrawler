@@ -28,7 +28,7 @@ public class Crawler
 	private ArrayList<Link> banned;
 	private BrowserInterface browser;
 	private int maxDownloadedPages = Integer.MAX_VALUE;
-	private boolean verbose = true;
+	private boolean verbose = false;
 	private UrlInspectorInterface urlInspector;
 	private HtmlValidator validator;
 	
@@ -41,26 +41,6 @@ public class Crawler
 		
 		this.urlInspector = new ExtensionUrlInspector();
 		this.validator = new HtmlValidator();
-	}
-	
-	public void setUrlInspector(UrlInspectorInterface inspector)
-	{
-		this.urlInspector = inspector;
-	}
-	
-	public void setBrowser(BrowserInterface browser)
-	{
-		this.browser = browser;
-	}
-	
-	public void setMaxDownloadedPages(int n)
-	{
-		this.maxDownloadedPages = n;
-	}
-	
-	public void setVerbose(boolean verbose)
-	{
-		this.verbose = verbose;
 	}
 	
 	public void unleash(String startUrl)
@@ -114,6 +94,41 @@ public class Crawler
 		this.say("\n\nNo, I'm not crashing. There is just nothing else to crawl!");
 	}
 	
+	private Page processLink(Link link, int tryAgain) throws UnreachableUrlException
+	{
+		try {
+			return browser.getPage(link.toString());
+		}
+		catch (Exception e) {
+			if (tryAgain>0) {
+				this.say("[WARNING] Browser hangs, process killed. Times before banning page: " + (tryAgain-1));
+				return this.processLink(link, tryAgain-1);
+			} else {
+				throw new UnreachableUrlException(link);
+			}
+		}
+	}
+	
+	public void setUrlInspector(UrlInspectorInterface inspector)
+	{
+		this.urlInspector = inspector;
+	}
+	
+	public void setBrowser(BrowserInterface browser)
+	{
+		this.browser = browser;
+	}
+	
+	public void setMaxDownloadedPages(int n)
+	{
+		this.maxDownloadedPages = n;
+	}
+	
+	public void setVerbose(boolean verbose)
+	{
+		this.verbose = verbose;
+	}
+	
 	public HashMap<Link, String> getDownloadedPages()
 	{
 		return this.downloaded;
@@ -128,21 +143,6 @@ public class Crawler
 	{
 		if (verbose) {
 			System.out.println(message);
-		}
-	}
-	
-	private Page processLink(Link link, int tryAgain) throws UnreachableUrlException
-	{
-		try {
-			return browser.getPage(link.toString());
-		}
-		catch (Exception e) {
-			if (tryAgain>0) {
-				this.say("[WARNING] Browser hangs, process killed. Times before banning page: " + (tryAgain-1));
-				return this.processLink(link, tryAgain-1);
-			} else {
-				throw new UnreachableUrlException(link);
-			}
 		}
 	}
 }

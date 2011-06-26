@@ -28,8 +28,8 @@ public class Main
 		crawler.setBrowser(new Browser());
 		
 		for (int i=1; i<args.length; i++) {
-			if (args[i].equals("--quiet")) {
-				crawler.setVerbose(false);
+			if (args[i].equals("--verbose")) {
+				crawler.setVerbose(true);
 			} else {
 				if (args[i].equals("--accurate")) {
 					crawler.setUrlInspector(new UrlInspector());
@@ -55,9 +55,9 @@ public class Main
 		System.out.println("   java -jar crawler.jar <StartUrl> [--quiet] [--accurate]");
 		System.out.println("\n");
 		System.out.println("Options:");
-		System.out.println("  --quiet     no output at all");
-		System.out.println("  --accurate  sends an HEAD request to discover mime-type");
-		System.out.println("              instead of detecting it by URL extension");
+		System.out.println("  --verbose   writes to console when fetching pages and when adding links");
+		System.out.println("  --accurate  sends an HEAD request to discover mime-type instead of");
+		System.out.println("              detecting it by URL extension");
 		System.exit(1);
 	}
 }
