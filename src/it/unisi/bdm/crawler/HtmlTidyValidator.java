@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
-public class HtmlValidator implements HtmlValidatorInterface
+public class HtmlTidyValidator implements HtmlValidatorInterface
 {
 	@Override
 	/**

@@ -23,16 +23,16 @@ import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import com.google.gson.Gson;
 
-public class Browser implements BrowserInterface
+public class PhantomjsBrowser implements BrowserInterface
 {
 	private long timeout;
 	
-	public Browser()
+	public PhantomjsBrowser()
 	{
 		this.timeout = 9999;
 	}
 	
-	public Browser(long timeout)
+	public PhantomjsBrowser(long timeout)
 	{
 		this.timeout = timeout;
 	}

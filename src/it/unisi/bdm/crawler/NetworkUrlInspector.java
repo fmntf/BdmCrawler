@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.HttpURLConnection;
 
-public class UrlInspector implements UrlInspectorInterface
+public class NetworkUrlInspector implements UrlInspectorInterface
 {
 	@Override
 	/**

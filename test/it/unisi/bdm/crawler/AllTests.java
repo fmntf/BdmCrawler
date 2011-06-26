@@ -21,13 +21,13 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	BrowserTest.class,
+	PhantomjsBrowserTest.class,
 	CrawlerTest.class,
-	HtmlValidatorTest.class,
+	HtmlTidyValidatorTest.class,
 	LinkComparatorTest.class,
 	LinkTest.class,
 	PageTest.class,
-	UrlInspectorTest.class
+	NetworkUrlInspectorTest.class
 })
 public class AllTests
 {}

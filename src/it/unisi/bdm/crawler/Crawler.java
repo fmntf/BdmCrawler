@@ -30,7 +30,7 @@ public class Crawler
 	private int maxDownloadedPages = Integer.MAX_VALUE;
 	private boolean verbose = false;
 	private UrlInspectorInterface urlInspector;
-	private HtmlValidator validator;
+	private HtmlTidyValidator validator;
 	
 	public Crawler()
 	{
@@ -40,7 +40,7 @@ public class Crawler
 		this.downloaded = new HashMap<Link, String>();
 		
 		this.urlInspector = new ExtensionUrlInspector();
-		this.validator = new HtmlValidator();
+		this.validator = new HtmlTidyValidator();
 	}
 	
 	/**

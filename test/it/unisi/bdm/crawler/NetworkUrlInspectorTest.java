@@ -19,40 +19,40 @@ package it.unisi.bdm.crawler;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class UrlInspectorTest
+public class NetworkUrlInspectorTest
 {
 	@Test
 	public void wontReportFalsePositives()
 	{
-		UrlInspector inspector = new UrlInspector();
+		NetworkUrlInspector inspector = new NetworkUrlInspector();
 		assertTrue(inspector.isLegal("http://blog.webmatters.it"));
 	}
 	
 	@Test
 	public void detectsAnUrlThatPointsToAnImage()
 	{
-		UrlInspector inspector = new UrlInspector();
+		NetworkUrlInspector inspector = new NetworkUrlInspector();
 		assertFalse(inspector.isLegal("http://blog.webmatters.it/wp-content/themes/twentyten/images/tramonto.jpg"));
 	}
 	
 	@Test
 	public void detectsAnUrlWithFtpSchema()
 	{
-		UrlInspector inspector = new UrlInspector();
+		NetworkUrlInspector inspector = new NetworkUrlInspector();
 		assertFalse(inspector.isLegal("ftp://blog.webmatters.it"));
 	}
 	
 	@Test
 	public void detectsAnUrlWithJavascriptSchema()
 	{
-		UrlInspector inspector = new UrlInspector();
+		NetworkUrlInspector inspector = new NetworkUrlInspector();
 		assertFalse(inspector.isLegal("javascript:history.back()"));
 	}
 	
 	@Test
 	public void wontHangIfUrlDoesNotExists()
 	{
-		UrlInspector inspector = new UrlInspector();
+		NetworkUrlInspector inspector = new NetworkUrlInspector();
 		assertFalse(inspector.isLegal("http://www.dailyminivan.iveco.com"));
 	}
 }

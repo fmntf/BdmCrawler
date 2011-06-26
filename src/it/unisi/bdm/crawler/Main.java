@@ -30,14 +30,14 @@ public class Main
 		}
 		
 		Crawler crawler = new Crawler();
-		crawler.setBrowser(new Browser());
+		crawler.setBrowser(new PhantomjsBrowser());
 		
 		for (int i=1; i<args.length; i++) {
 			if (args[i].equals("--verbose")) {
 				crawler.setVerbose(true);
 			} else {
 				if (args[i].equals("--accurate")) {
-					crawler.setUrlInspector(new UrlInspector());
+					crawler.setUrlInspector(new NetworkUrlInspector());
 				} else {
 					System.out.println("Invalid option: " + args[i]);
 					Main.usage();

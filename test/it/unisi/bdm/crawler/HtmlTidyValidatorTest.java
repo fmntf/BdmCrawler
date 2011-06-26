@@ -22,12 +22,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class HtmlValidatorTest
+public class HtmlTidyValidatorTest
 {
 	@Test
 	public void wontReportErrorsOnValidPage()
 	{
-		HtmlValidator validator = new HtmlValidator();
+		HtmlTidyValidator validator = new HtmlTidyValidator();
 		
 		int mess = validator.validate(this.readFile("test/fixtures/html/w3.org.html"));
 		assertEquals(0, mess);
@@ -36,7 +36,7 @@ public class HtmlValidatorTest
 	@Test
 	public void repostsErrorsOnInvalidPage()
 	{
-		HtmlValidator validator = new HtmlValidator();
+		HtmlTidyValidator validator = new HtmlTidyValidator();
 		
 		int mess = validator.validate(this.readFile("test/fixtures/html/iveco.com.html"));
 		assertEquals(12, mess);

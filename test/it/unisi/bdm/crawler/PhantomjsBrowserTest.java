@@ -19,12 +19,12 @@ package it.unisi.bdm.crawler;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class BrowserTest
+public class PhantomjsBrowserTest
 {
 	@Test
 	public void getsHtmlPageWithLinks() throws BrowserTimeoutException
 	{
-		Browser browser = new Browser();
+		PhantomjsBrowser browser = new PhantomjsBrowser();
 		Page page = browser.getPage("http://blog.webmatters.it");
 		
 		assertTrue(page.toString().length() > 0);
@@ -35,7 +35,7 @@ public class BrowserTest
 	@Test(expected=BrowserTimeoutException.class)
 	public void throwsExceptionOnTimeout() throws BrowserTimeoutException
 	{
-		Browser browser = new Browser(10); // msec
+		PhantomjsBrowser browser = new PhantomjsBrowser(10); // msec
 		browser.getPage("http://blog.webmatters.it");
 	}
 }
