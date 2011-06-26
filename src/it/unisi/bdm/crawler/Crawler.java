@@ -29,7 +29,7 @@ public class Crawler
 	private BrowserInterface browser;
 	private int maxDownloadedPages = Integer.MAX_VALUE;
 	private boolean verbose = false;
-	private UrlInspector urlInspector;
+	private UrlInspectorInterface urlInspector;
 	private HtmlValidator validator;
 	
 	public Crawler()
@@ -39,8 +39,13 @@ public class Crawler
 		this.banned = new ArrayList<Link>();
 		this.downloaded = new HashMap<Link, String>();
 		
-		this.urlInspector = new UrlInspector();
+		this.urlInspector = new ExtensionUrlInspector();
 		this.validator = new HtmlValidator();
+	}
+	
+	public void setUrlInspector(UrlInspectorInterface inspector)
+	{
+		this.urlInspector = inspector;
 	}
 	
 	public void setBrowser(BrowserInterface browser)
@@ -60,9 +65,11 @@ public class Crawler
 	
 	public void unleash(String startUrl)
 	{
-		this.queue.add(
-			new Link(startUrl)
-		);
+		if (!this.urlInspector.isLegal(startUrl)) {
+			throw new IllegalArgumentException("The URL " + startUrl + " is not valid.");
+		}
+		
+		this.queue.add(new Link(startUrl));
 		
 		Link linkToProcess;
 		Page downloadedPage;

@@ -16,23 +16,34 @@
 
 package it.unisi.bdm.crawler;
 
-public class Main
+import java.net.URL;
+
+public class ExtensionUrlInspector implements UrlInspectorInterface
 {
-	public static void main(String[] args)
+	public Boolean isLegal(String url)
 	{
-		if (args.length != 1) {
-			System.out.println("Usage:");
-			System.out.println("   java -jar crawler.jar <StartUrl>");
-			System.exit(1);
+		URL u;
+		
+		try {
+			u = new URL(url);
+		}
+		catch (java.net.MalformedURLException e) {
+			return false;
 		}
 		
-		Crawler crawler = new Crawler();
-		Browser browser = new Browser();
+		if (!u.getProtocol().equals("http")) {
+			return false;
+		}
 		
-		crawler.setBrowser(browser);
-		crawler.setVerbose(true);
-//		crawler.setUrlInspector(new UrlInspector());
+		String[] parts = u.getPath().split("\\.");
 		
-		crawler.unleash(args[0]);
+		if (parts.length == 1) {
+			return true;
+		}
+		
+		String extension = parts[parts.length-1];
+		
+		return (extension.equals("html") || extension.equals("htm") || extension.equals("php") || 
+				extension.equals("asp") || extension.equals("aspx") || extension.equals("jsp"));
 	}
 }

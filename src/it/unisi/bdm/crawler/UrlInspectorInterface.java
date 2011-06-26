@@ -16,23 +16,7 @@
 
 package it.unisi.bdm.crawler;
 
-public class Main
+public interface UrlInspectorInterface
 {
-	public static void main(String[] args)
-	{
-		if (args.length != 1) {
-			System.out.println("Usage:");
-			System.out.println("   java -jar crawler.jar <StartUrl>");
-			System.exit(1);
-		}
-		
-		Crawler crawler = new Crawler();
-		Browser browser = new Browser();
-		
-		crawler.setBrowser(browser);
-		crawler.setVerbose(true);
-//		crawler.setUrlInspector(new UrlInspector());
-		
-		crawler.unleash(args[0]);
-	}
+	public Boolean isLegal(String url);
 }

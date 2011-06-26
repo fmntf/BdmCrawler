@@ -20,8 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.HttpURLConnection;
 
-public class UrlInspector
+public class UrlInspector implements UrlInspectorInterface
 {
+	@Override
 	public Boolean isLegal(String url)
 	{
 		URL u;
