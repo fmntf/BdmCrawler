@@ -26,11 +26,12 @@ public class Main
 			System.exit(1);
 		}
 		
-		Crawler crawler = new Crawler(args[0]);
+		Crawler crawler = new Crawler();
 		Browser browser = new Browser();
 		
 		crawler.setBrowser(browser);
 		crawler.setVerbose(true);
-		crawler.unleash();
+		
+		crawler.unleash(args[0]);
 	}
 }

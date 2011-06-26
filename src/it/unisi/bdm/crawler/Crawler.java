@@ -23,23 +23,24 @@ import java.util.PriorityQueue;
 
 public class Crawler
 {
-	PriorityQueue<Link> queue;
-	HashMap<Link, String> downloaded;
-	ArrayList<Link> banned;
-	BrowserInterface browser;
-	int maxDownloadedPages = Integer.MAX_VALUE;
-	boolean verbose = false;
+	private PriorityQueue<Link> queue;
+	private HashMap<Link, String> downloaded;
+	private ArrayList<Link> banned;
+	private BrowserInterface browser;
+	private int maxDownloadedPages = Integer.MAX_VALUE;
+	private boolean verbose = false;
+	private UrlInspector urlInspector;
+	private HtmlValidator validator;
 	
-	public Crawler(String startUrl)
+	public Crawler()
 	{
 		Comparator<Link> comparator = new LinkComparator();
         this.queue = new PriorityQueue<Link>(30, comparator);
-		this.queue.add(
-			new Link(startUrl)
-		);
-		
 		this.banned = new ArrayList<Link>();
 		this.downloaded = new HashMap<Link, String>();
+		
+		this.urlInspector = new UrlInspector();
+		this.validator = new HtmlValidator();
 	}
 	
 	public void setBrowser(BrowserInterface browser)
@@ -57,13 +58,15 @@ public class Crawler
 		this.verbose = verbose;
 	}
 	
-	public void unleash()
+	public void unleash(String startUrl)
 	{
+		this.queue.add(
+			new Link(startUrl)
+		);
+		
 		Link linkToProcess;
 		Page downloadedPage;
 		int downloadedCount = 0;
-		UrlInspector urlInspector = new UrlInspector();
-		HtmlValidator validator = new HtmlValidator();
 		
 		while (!this.queue.isEmpty() && downloadedCount<this.maxDownloadedPages) {
 			try {
@@ -84,8 +87,8 @@ public class Crawler
 						!this.downloaded.containsKey(link) &&
 						!this.queue.contains(link)
 					) {
-						if (urlInspector.isLegal(link.toString())) {
-							link.setContextMess(downloadedPage.getContextMess(validator));
+						if (this.urlInspector.isLegal(link.toString())) {
+							link.setContextMess(downloadedPage.getContextMess(this.validator));
 							this.queue.add(link);
 							this.say("   [Adding "+link.how()+" @" +link.getScore().toString()+ "] " + link);
 						} else {

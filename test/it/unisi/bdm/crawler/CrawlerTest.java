@@ -27,10 +27,10 @@ public class CrawlerTest
 		BrowserMock browser = new BrowserMock();
 		this.injectAciclycGraph(browser);
 		
-		Crawler crawler = new Crawler("http://www.iveco.com");
+		Crawler crawler = new Crawler();
 		crawler.setBrowser(browser);
 		
-		crawler.unleash();
+		crawler.unleash("http://www.iveco.com");
 		
 		assertTrue(crawler.getDownloadedPages().size() == 2);
 		assertTrue(crawler.getBannedPages().isEmpty());
@@ -42,10 +42,10 @@ public class CrawlerTest
 		BrowserMock browser = new BrowserMock();
 		this.injectAciclycUnreachableGraph(browser);
 		
-		Crawler crawler = new Crawler("http://www.iveco.com");
+		Crawler crawler = new Crawler();
 		crawler.setBrowser(browser);
 		
-		crawler.unleash();
+		crawler.unleash("http://www.iveco.com");
 		
 		assertTrue(crawler.getDownloadedPages().size() == 1);
 		assertTrue(crawler.getDownloadedPages().containsKey(new Link("http://www.iveco.com")));
@@ -60,10 +60,10 @@ public class CrawlerTest
 		BrowserMock browser = new BrowserMock();
 		this.injectCiclycGraph(browser);
 		
-		Crawler crawler = new Crawler("http://www.iveco.com");
+		Crawler crawler = new Crawler();
 		crawler.setBrowser(browser);
 		
-		crawler.unleash();
+		crawler.unleash("http://www.iveco.com");
 		
 		assertTrue(crawler.getDownloadedPages().size() == 2);
 		assertTrue(crawler.getBannedPages().isEmpty());
@@ -75,11 +75,11 @@ public class CrawlerTest
 		BrowserMock browser = new BrowserMock();
 		this.injectLongGraph(browser);
 		
-		Crawler crawler = new Crawler("http://www.iveco.com");
+		Crawler crawler = new Crawler();
 		crawler.setMaxDownloadedPages(3);
 		crawler.setBrowser(browser);
 		
-		crawler.unleash();
+		crawler.unleash("http://www.iveco.com");
 		
 		assertTrue(crawler.getDownloadedPages().size() == 3);
 		assertTrue(crawler.getBannedPages().isEmpty());
@@ -91,10 +91,10 @@ public class CrawlerTest
 		BrowserMock browser = new BrowserMock();
 		this.injectMailtoGraph(browser);
 		
-		Crawler crawler = new Crawler("http://www.iveco.com");
+		Crawler crawler = new Crawler();
 		crawler.setBrowser(browser);
 		
-		crawler.unleash();
+		crawler.unleash("http://www.iveco.com");
 		
 		assertTrue(crawler.getDownloadedPages().size() == 1);
 	}
