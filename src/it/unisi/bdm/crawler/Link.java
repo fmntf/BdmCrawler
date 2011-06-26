@@ -37,11 +37,22 @@ public class Link
 		this.bold = bold;
 	}
 	
+	/**
+	 * Sets the penality of the page
+	 * 
+	 * @param contextMess In interval 0-1
+	 */
 	public void setContextMess(float contextMess)
 	{
 		this.contextMess = contextMess;
 	}
 	
+	/**
+	 * Computes a score for the link based on it's page, bold tag and visiblity.
+	 * 1 means very good link, 0 means very bad link.
+	 * 
+	 * @return Float
+	 */
 	public Float getScore()
 	{
 		float score = 1 - this.contextMess;
@@ -66,6 +77,11 @@ public class Link
 		return score;
 	}
 	
+	/**
+	 * Create a string telling how the link is it.
+	 * 
+	 * @return String
+	 */
 	public String how()
 	{
 		String what = "link";

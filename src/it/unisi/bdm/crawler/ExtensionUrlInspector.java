@@ -20,6 +20,13 @@ import java.net.URL;
 
 public class ExtensionUrlInspector implements UrlInspectorInterface
 {
+	@Override
+	/**
+	 * Detects if `url` points to an HTML page.
+	 * 
+	 * @param url
+	 * @return Boolean
+	 */
 	public Boolean isLegal(String url)
 	{
 		URL u;

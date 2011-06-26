@@ -17,7 +17,6 @@
 package it.unisi.bdm.crawler;
 
 import org.w3c.tidy.Tidy;
-import org.w3c.tidy.TidyMessageListener;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -26,6 +25,12 @@ import java.io.PrintWriter;
 public class HtmlValidator implements HtmlValidatorInterface
 {
 	@Override
+	/**
+	 * Gets a number which is proportional to the mess in the HTML code.
+	 * 
+	 * @param html
+	 * @return int
+	 */
 	public int validate(String html)
 	{
 		Tidy tidy = new Tidy();

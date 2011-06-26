@@ -32,6 +32,13 @@ public class Page
 		return this.links;
 	}
 	
+	/**
+	 * Validates the HTML and gives a score.
+	 * 0 means "no errors in HTML", 0.5 means "please, uninstall MS FrontPage"
+	 * 
+	 * @param validator
+	 * @return float
+	 */
 	public float getContextMess(HtmlValidatorInterface validator)
 	{
 		float errors = (float)validator.validate(this.html);

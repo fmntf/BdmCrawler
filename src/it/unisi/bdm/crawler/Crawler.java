@@ -43,7 +43,15 @@ public class Crawler
 		this.validator = new HtmlValidator();
 	}
 	
-	public void unleash(String startUrl)
+	/**
+	 * Starts the crawling.
+	 * Until there is something to crawl, downloads a page and validates in order
+	 * to know how bad that page really is. Then adds the page links to the queue.
+	 * 
+	 * @param startUrl The first page to download.
+	 * @throws IllegalArgumentException If startUrl is invalid.
+	 */
+	public void unleash(String startUrl) throws IllegalArgumentException
 	{
 		if (!this.urlInspector.isLegal(startUrl)) {
 			throw new IllegalArgumentException("The URL " + startUrl + " is not valid.");
@@ -63,6 +71,7 @@ public class Crawler
 				
 				// store HTML
 				this.downloaded.put(linkToProcess, downloadedPage.toString());
+				float pageMess = downloadedPage.getContextMess(this.validator);
 				
 				// add links to queue if
 				//  - not downloaded yet
@@ -75,7 +84,7 @@ public class Crawler
 						!this.queue.contains(link)
 					) {
 						if (this.urlInspector.isLegal(link.toString())) {
-							link.setContextMess(downloadedPage.getContextMess(this.validator));
+							link.setContextMess(pageMess);
 							this.queue.add(link);
 							this.say("   [Adding "+link.how()+" @" +link.getScore().toString()+ "] " + link);
 						} else {
@@ -94,6 +103,14 @@ public class Crawler
 		this.say("\n\nNo, I'm not crashing. There is just nothing else to crawl!");
 	}
 	
+	/**
+	 * Tries to download the page associated to `link`, up to `tryAgain` times.
+	 * 
+	 * @param link
+	 * @param tryAgain
+	 * @return Page
+	 * @throws UnreachableUrlException If the browser hangs more than `tryAgain` times.
+	 */
 	private Page processLink(Link link, int tryAgain) throws UnreachableUrlException
 	{
 		try {

@@ -18,6 +18,11 @@ package it.unisi.bdm.crawler;
 
 public class Main
 {
+	/**
+	 * Parses command line params and starts the crawler.
+	 * 
+	 * @param args Command line arguments
+	 */
 	public static void main(String[] args)
 	{
 		if (args.length == 0) {
@@ -52,7 +57,7 @@ public class Main
 	private static void usage()
 	{
 		System.out.println("Usage:");
-		System.out.println("   java -jar crawler.jar <StartUrl> [--quiet] [--accurate]");
+		System.out.println("   java -jar crawler.jar <StartUrl> [--verbose] [--accurate]");
 		System.out.println("\n");
 		System.out.println("Options:");
 		System.out.println("  --verbose   writes to console when fetching pages and when adding links");

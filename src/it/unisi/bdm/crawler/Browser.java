@@ -38,6 +38,15 @@ public class Browser implements BrowserInterface
 	}
 	
 	@Override
+	/**
+	 * Invokes PhantomJS in order to download the page associated to `url`.
+	 * Please note that since the browser sometimes hangs, it's execution is
+	 * monitored by a wathdog that kills it after this.timeout ms.
+	 * 
+	 * @param url
+	 * @return Page
+	 * @throws BrowserTimeoutException If PhantomJS hangs.
+	 */
 	public Page getPage(String url) throws BrowserTimeoutException
 	{
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
@@ -49,6 +58,7 @@ public class Browser implements BrowserInterface
 		ExecuteWatchdog watchdog = new ExecuteWatchdog(this.timeout);
 		executor.setWatchdog(watchdog);
 		executor.setStreamHandler(psh);
+		
 		try {
 			executor.execute(cmdLine);
 		}

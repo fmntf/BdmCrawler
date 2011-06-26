@@ -23,6 +23,13 @@ import java.net.HttpURLConnection;
 public class UrlInspector implements UrlInspectorInterface
 {
 	@Override
+	/**
+	 * Connects to the network via an HEAD request to get the content-type of
+	 * the resource pointed by `url`.
+	 * 
+	 * @param url
+	 * @return Boolean
+	 */
 	public Boolean isLegal(String url)
 	{
 		URL u;
